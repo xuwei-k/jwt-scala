@@ -1,16 +1,16 @@
 jwt-scala
 =========
 
-[![Build Status](https://travis-ci.org/reallylabs/jwt-scala.svg)](https://travis-ci.org/reallylabs/jwt-scala)
+[![Build Status](https://travis-ci.org/xuwei-k/jwt-scala.svg)](https://travis-ci.org/xuwei-k/jwt-scala)
 
 An implementation of [JSON Web Tokens](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html)
 
 ### Setup
-Jwt-scala has been published for scala 2.11/2.10 and sbt 0.13.6
+Jwt-scala has been published for scala 2.11, 2.12 and 2.13
 
 Add the dependency to your build.sbt
 ```
-libraryDependencies += "io.really" %% "jwt-scala" % "1.2.2"
+libraryDependencies += "com.github.xuwei-k" %% "jwt-scala" % "1.4.0"
 ```
 
 ### Usage

@@ -1,16 +1,22 @@
 name := "jwt-scala"
 
-version := "1.2.3"
+organization := "com.github.xuwei-k"
 
-organization := "io.really"
+scalacOptions ++= Seq(
+  "-deprecation",
+)
 
-crossScalaVersions := Seq("2.10.6", "2.11.11", "2.12.4")
+val Scala211 = "2.11.12"
 
-homepage := Some(url("https://github.com/reallylabs/jwt-scala"))
+scalaVersion := Scala211
+
+crossScalaVersions := Seq(Scala211, "2.12.8", "2.13.0")
+
+homepage := Some(url("https://github.com/xuwei-k/jwt-scala"))
 
 licenses += "Apache2" -> url("http://www.opensource.org/licenses/Apache-2.0")
 
-scmInfo := Some(ScmInfo(url("https://github.com/reallylabs/jwt-scala"), "scm:git@github.com:reallylabs/jwt-scala.git"))
+scmInfo := Some(ScmInfo(url("https://github.com/xuwei-k/jwt-scala"), "scm:git@github.com:xuwei-k/jwt-scala.git"))
 
 publishMavenStyle := true
 
@@ -21,9 +27,8 @@ pomIncludeRepository := { _ => false }
 pomExtra := (
   <developers>
     <developer>
-      <id>reallylabs</id>
-      <name>Really Labs</name>
-      <url>http://really.io</url>
+      <id>xuwei-k</id>
+      <name>Kenji Yoshida</name>
     </developer>
   </developers>)
 
@@ -35,15 +40,37 @@ publishTo := {
     Some("releases" at nexus + "service/local/staging/deploy/maven2")
 }
 
-scalaVersion := "2.11.11"
-
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.0.1" % "test",
-  "com.typesafe.play" %% "play-json" % "2.6.8",
-  "commons-codec" % "commons-codec" % "1.6",
+  "org.scalatest" %% "scalatest" % "3.0.8" % "test",
+  "com.typesafe.play" %% "play-json" % "2.7.4",
+  "commons-codec" % "commons-codec" % "1.12",
   "org.bouncycastle" % "bcprov-jdk16" % "1.46"
 )
 
-resolvers ++= Seq(
-  "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/"
-)
+releasePublishArtifactsAction := PgpKeys.publishSigned.value
+
+scalacOptions in (Compile, doc) ++= {
+  val tag = tagOrHash.value
+  Seq(
+    "-sourcepath",
+    (baseDirectory in LocalRootProject).value.getAbsolutePath,
+    "-doc-source-url",
+    s"https://github.com/xuwei-k/jwt-scala/tree/${tag}€{FILE_PATH}.scala"
+  )
+}
+
+val tagName = Def.setting {
+  s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
+}
+
+val tagOrHash = Def.setting {
+  if (isSnapshot.value) {
+    sys.process.Process("git rev-parse HEAD").lineStream_!.head
+  } else {
+    tagName.value
+  }
+}
+
+releaseTagName := tagName.value
+
+releaseCrossBuild := true
