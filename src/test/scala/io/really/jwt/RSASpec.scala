@@ -6,13 +6,14 @@ package io.really.jwt
 import io.really.jwt.JWTException.{InvalidPrivateKey, InvalidPublicKey}
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.openssl.PEMWriter
-import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.Json
 import java.io._
 import java.security._
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 
-class RSASpec extends FlatSpec with Matchers {
+class RSASpec extends AnyFlatSpec with Matchers {
 
   object MyKeyStore {
     if (Security.getProvider("BC") == null) Security.addProvider(new BouncyCastleProvider());

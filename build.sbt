@@ -10,7 +10,7 @@ val Scala211 = "2.11.12"
 
 scalaVersion := Scala211
 
-crossScalaVersions := Seq(Scala211, "2.12.8", "2.13.0")
+crossScalaVersions := Seq(Scala211, "2.12.11", "2.13.1")
 
 homepage := Some(url("https://github.com/xuwei-k/jwt-scala"))
 
@@ -41,9 +41,9 @@ publishTo := {
 }
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.0.8" % "test",
+  "org.scalatest" %% "scalatest" % "3.1.1" % "test",
   "com.typesafe.play" %% "play-json" % "2.7.4",
-  "commons-codec" % "commons-codec" % "1.12",
+  "commons-codec" % "commons-codec" % "1.14",
   "org.bouncycastle" % "bcprov-jdk16" % "1.46"
 )
 

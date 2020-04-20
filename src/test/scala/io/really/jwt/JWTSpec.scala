@@ -3,12 +3,13 @@
  */
 package io.really.jwt
 
-import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.Json
 import org.apache.commons.codec.binary.Base64
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 
-class JWTSpec extends FlatSpec with Matchers {
+class JWTSpec extends AnyFlatSpec with Matchers {
 
   "encode" should "generate json web token" in {
     val payload = Json.obj("name" -> "Ahmed", "email" -> "ahmed@gmail.com")
