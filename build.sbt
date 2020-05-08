@@ -11,11 +11,11 @@ scalacOptions ++= Seq(
   "-language:implicitConversions",
 )
 
-val Scala211 = "2.11.12"
+val Scala212 = "2.12.12"
 
-scalaVersion := Scala211
+scalaVersion := Scala212
 
-crossScalaVersions := Seq(Scala211, "2.12.12", "2.13.3")
+crossScalaVersions := Seq(Scala212, "2.13.3")
 
 homepage := Some(url("https://github.com/xuwei-k/jwt-scala"))
 
