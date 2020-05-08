@@ -3,6 +3,7 @@
  */
 package io.really.jwt
 
+import io.really.jwt.TestUtil._
 import play.api.libs.json.Json
 import org.apache.commons.codec.binary.Base64
 import org.scalatest.flatspec.AnyFlatSpec

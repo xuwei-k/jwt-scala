@@ -4,6 +4,7 @@
 package io.really.jwt
 
 import io.really.jwt.JWTException.{InvalidPrivateKey, InvalidPublicKey}
+import io.really.jwt.TestUtil._
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.openssl.PEMWriter
 import play.api.libs.json.Json
