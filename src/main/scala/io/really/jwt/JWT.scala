@@ -95,8 +95,10 @@ object JWT {
    */
   private[jwt] def encodeHeader(algorithm: Option[Algorithm], header: JsObject): String = {
     val h = algorithm match {
-      case Some(alg) => Json.obj("alg" -> alg.name, "typ" -> "JWT") ++ header
-      case None => Json.obj("typ" -> "JWT", "alg" -> "") ++ header
+      case Some(alg) =>
+        JsObject(Seq("typ" -> JsString("JWT"), "alg" -> JsString(alg.name)) ++ header.fields)
+      case None =>
+        JsObject(Seq("typ" -> JsString("JWT"), "alg" -> JsString("")) ++ header.fields)
     }
     encodeBase64url(Json.stringify(h))
   }

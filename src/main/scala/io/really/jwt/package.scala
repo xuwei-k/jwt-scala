@@ -109,7 +109,12 @@ package object jwt {
   case class JWTHeader(alg: Algorithm, extraHeader: JsObject = Json.obj()){
     val `type` = "JWT"
 
-    def toJson = Json.obj("typ" -> `type`, "alg" -> alg) ++ extraHeader
+    def toJson: JsObject = JsObject(
+      Seq(
+        "typ" -> JsString(`type`),
+        "alg" -> Json.toJson(alg)
+      ) ++ extraHeader.fields
+    )
   }
 
   /**
