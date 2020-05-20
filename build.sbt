@@ -3,7 +3,9 @@ name := "jwt-scala"
 organization := "com.github.xuwei-k"
 
 scalacOptions ++= Seq(
+  "-feature",
   "-deprecation",
+  "-language:implicitConversions",
 )
 
 val Scala211 = "2.11.12"
