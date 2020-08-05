@@ -1,3 +1,6 @@
+import sbtrelease._
+import ReleaseStateTransformations._
+
 name := "jwt-scala"
 
 organization := "com.github.xuwei-k"
@@ -34,13 +37,7 @@ pomExtra := (
     </developer>
   </developers>)
 
-publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value)
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases" at nexus + "service/local/staging/deploy/maven2")
-}
+publishTo := sonatypePublishToBundle.value
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.0" % "test",
@@ -76,3 +73,27 @@ val tagOrHash = Def.setting {
 releaseTagName := tagName.value
 
 releaseCrossBuild := true
+
+def releaseStepCross[A](key: TaskKey[A]) =
+  ReleaseStep(
+    action = { state =>
+      val extracted = Project extract state
+      extracted.runAggregated(key in Global in extracted.get(thisProjectRef), state)
+    },
+    enableCrossBuild = true
+  )
+
+releaseProcess := Seq[ReleaseStep](
+  checkSnapshotDependencies,
+  inquireVersions,
+  runClean,
+  runTest,
+  setReleaseVersion,
+  commitReleaseVersion,
+  tagRelease,
+  releaseStepCross(PgpKeys.publishSigned),
+  releaseStepCommandAndRemaining("sonatypeBundleRelease"),
+  setNextVersion,
+  commitNextVersion,
+  pushChanges
+)
