@@ -12,10 +12,15 @@ import org.scalatest.matchers.should.Matchers
 
 class JWTSpec extends AnyFlatSpec with Matchers {
 
+  it should "JTWHeader.toJson.toString" in {
+    assert(JWTHeader(Algorithm.HS256).toJson.toString == """{"typ":"JWT","alg":"HS256"}""")
+  }
+
   "encode" should "generate json web token" in {
     val payload = Json.obj("name" -> "Ahmed", "email" -> "ahmed@gmail.com")
     val jwt = JWT.encode("secret", payload)
 
+    assert(jwt == "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiQWhtZWQiLCJlbWFpbCI6ImFobWVkQGdtYWlsLmNvbSJ9.77-9b--_ve-_vXAxYiUfZhwF77-977-9cO-_ve-_vQrEq--_ve-_vWHvv71wFBZ877-9WxXvv70")
     assertResult(JWT.decode(jwt, None).asInstanceOf[JWTResult.JWT].payload)(payload)
   }
 
