@@ -6,12 +6,12 @@ jwt-scala
 An implementation of [JSON Web Tokens](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html)
 
 ### Setup
-Jwt-scala has been published for scala 2.11, 2.12 and 2.13
+Jwt-scala has been published for scala 2.12 and 2.13
 
 Add the dependency to your build.sbt
 
 ```scala
-libraryDependencies += "com.github.xuwei-k" %% "jwt-scala" % "1.4.0"
+libraryDependencies += "com.github.xuwei-k" %% "jwt-scala" % "1.6.0"
 ```
 
 ### Usage
