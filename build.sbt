@@ -43,7 +43,7 @@ publishTo := {
 }
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.1.1" % "test",
+  "org.scalatest" %% "scalatest" % "3.2.0" % "test",
   "com.typesafe.play" %% "play-json" % "2.7.4",
   "commons-codec" % "commons-codec" % "1.14",
   "org.bouncycastle" % "bcprov-jdk16" % "1.46"
