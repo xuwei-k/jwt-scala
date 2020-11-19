@@ -15,7 +15,7 @@ val Scala212 = "2.12.12"
 
 scalaVersion := Scala212
 
-crossScalaVersions := Seq(Scala212, "2.13.3")
+crossScalaVersions := Seq(Scala212, "2.13.4")
 
 homepage := Some(url("https://github.com/xuwei-k/jwt-scala"))
 
