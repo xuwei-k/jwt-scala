@@ -42,7 +42,7 @@ publishTo := sonatypePublishToBundle.value
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.3" % "test",
   "com.typesafe.play" %% "play-json" % "2.8.1",
-  "commons-codec" % "commons-codec" % "1.14",
+  "commons-codec" % "commons-codec" % "1.15",
   "org.bouncycastle" % "bcprov-jdk16" % "1.46"
 )
 
