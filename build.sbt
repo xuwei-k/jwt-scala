@@ -50,12 +50,17 @@ releasePublishArtifactsAction := PgpKeys.publishSigned.value
 
 scalacOptions in (Compile, doc) ++= {
   val tag = tagOrHash.value
-  Seq(
-    "-sourcepath",
-    (baseDirectory in LocalRootProject).value.getAbsolutePath,
-    "-doc-source-url",
-    s"https://github.com/xuwei-k/jwt-scala/tree/${tag}€{FILE_PATH}.scala"
-  )
+  CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((v, _)) if v >= 3 =>
+      Nil
+    case _ =>
+      Seq(
+        "-sourcepath",
+        (baseDirectory in LocalRootProject).value.getAbsolutePath,
+        "-doc-source-url",
+        s"https://github.com/xuwei-k/jwt-scala/tree/${tag}€{FILE_PATH}.scala"
+      )
+  }
 }
 
 val tagName = Def.setting {
