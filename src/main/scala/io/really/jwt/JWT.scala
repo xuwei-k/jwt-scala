@@ -200,8 +200,6 @@ object JWT {
       }
       case Algorithm.RS256 | Algorithm.RS384 | Algorithm.RS512 =>
         verifyRsa(algorithm, key, signingInput, signature)
-      case Algorithm.NONE if key == None  => 
-        true
       case _ =>
         false
     }
