@@ -11,11 +11,11 @@ scalacOptions ++= Seq(
   "-language:implicitConversions",
 )
 
-val Scala212 = "2.12.12"
+val Scala212 = "2.12.13"
 
 scalaVersion := Scala212
 
-crossScalaVersions := Seq(Scala212, "2.13.4", "3.0.0-M2")
+crossScalaVersions := Seq(Scala212, "2.13.5", "3.0.0-RC1")
 
 homepage := Some(url("https://github.com/xuwei-k/jwt-scala"))
 
@@ -40,7 +40,7 @@ pomExtra := (
 publishTo := sonatypePublishToBundle.value
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.2.3" % "test",
+  "org.scalatest" %% "scalatest" % "3.2.5" % "test",
   "com.typesafe.play" %% "play-json" % "2.9.2" withDottyCompat scalaVersion.value,
   "commons-codec" % "commons-codec" % "1.15",
   "org.bouncycastle" % "bcprov-jdk16" % "1.46"
