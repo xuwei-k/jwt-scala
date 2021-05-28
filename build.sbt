@@ -11,7 +11,7 @@ scalacOptions ++= Seq(
   "-language:implicitConversions",
 )
 
-val Scala212 = "2.12.13"
+val Scala212 = "2.12.14"
 
 scalaVersion := Scala212
 
