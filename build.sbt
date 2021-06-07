@@ -40,7 +40,7 @@ pomExtra := (
 publishTo := sonatypePublishToBundle.value
 
 libraryDependencies ++= Seq(
-  "org.scalatest" %% "scalatest" % "3.2.8" % "test",
+  "org.scalatest" %% "scalatest" % "3.2.9" % "test",
   "com.typesafe.play" %% "play-json" % "2.9.2" cross CrossVersion.for3Use2_13,
   "commons-codec" % "commons-codec" % "1.15",
   "org.bouncycastle" % "bcprov-jdk16" % "1.46"
