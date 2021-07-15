@@ -39,9 +39,16 @@ pomExtra := (
 
 publishTo := sonatypePublishToBundle.value
 
+libraryDependencies += {
+  if (scalaBinaryVersion.value == "3") {
+    "com.typesafe.play" %% "play-json" % "2.10.0-RC5"
+  } else {
+    "com.typesafe.play" %% "play-json" % "2.9.2"
+  }
+}
+
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.9" % "test",
-  "com.typesafe.play" %% "play-json" % "2.9.2" cross CrossVersion.for3Use2_13,
   "commons-codec" % "commons-codec" % "1.15",
   "org.bouncycastle" % "bcprov-jdk16" % "1.46"
 )
