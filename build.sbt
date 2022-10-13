@@ -41,7 +41,7 @@ publishTo := sonatypePublishToBundle.value
 
 libraryDependencies += {
   if (scalaBinaryVersion.value == "3") {
-    "com.typesafe.play" %% "play-json" % "2.10.0-RC6"
+    "com.typesafe.play" %% "play-json" % "2.10.0-RC7"
   } else {
     "com.typesafe.play" %% "play-json" % "2.9.3"
   }
