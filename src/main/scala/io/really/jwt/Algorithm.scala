@@ -5,7 +5,7 @@ package io.really.jwt
 
 import play.api.libs.json._
 
-sealed trait Algorithm {
+sealed abstract class Algorithm extends Product with Serializable {
   def name: String
 }
 

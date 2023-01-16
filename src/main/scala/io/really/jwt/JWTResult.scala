@@ -8,7 +8,7 @@ import play.api.libs.json._
 /**
  * Represent result from decode operation
  */
-sealed trait JWTResult
+sealed abstract class JWTResult extends Product with Serializable
 
 object JWTResult {
 
