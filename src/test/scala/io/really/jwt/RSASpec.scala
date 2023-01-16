@@ -3,7 +3,8 @@
  */
 package io.really.jwt
 
-import io.really.jwt.JWTException.{InvalidPrivateKey, InvalidPublicKey}
+import io.really.jwt.JWTException.InvalidPrivateKey
+import io.really.jwt.JWTException.InvalidPublicKey
 import io.really.jwt.TestUtil._
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.bouncycastle.openssl.PEMWriter
@@ -12,7 +13,6 @@ import java.io._
 import java.security._
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
-
 
 class RSASpec extends AnyFlatSpec with Matchers {
 
@@ -30,19 +30,19 @@ class RSASpec extends AnyFlatSpec with Matchers {
 
     def otherPublicKeyStr = printKey(otherPublicKey)
 
-    def printKey(key:Object): String ={
+    def printKey(key: Object): String = {
       val writer = new StringWriter
       val pemWriter = new PEMWriter(writer)
-        pemWriter.writeObject(key)
-        pemWriter.flush()
-        pemWriter.close()
+      pemWriter.writeObject(key)
+      pemWriter.flush()
+      pemWriter.close()
       PemUtil.removeBeginEnd(writer.toString)
     }
   }
 
   "encode" should "generate json web token" in {
     val payload = Json.obj("name" -> "Ahmed", "email" -> "ahmed@gmail.com")
-    val jwt = JWT.encode(MyKeyStore.privateKeyStr, payload, Json.obj(), Some(Algorithm.RS256) )
+    val jwt = JWT.encode(MyKeyStore.privateKeyStr, payload, Json.obj(), Some(Algorithm.RS256))
     assertResult(JWT.decode(jwt, None).asInstanceOf[JWTResult.JWT].payload)(payload)
   }
 
@@ -52,7 +52,7 @@ class RSASpec extends AnyFlatSpec with Matchers {
     assertResult(JWT.decode(jwt, None).asInstanceOf[JWTResult.JWT].payload)(payload)
   }
 
-  "verify" should "prove a payload encoded with privateKey can be verified with publicKey" in{
+  "verify" should "prove a payload encoded with privateKey can be verified with publicKey" in {
     val payload = Json.obj("name" -> "Ahmed", "email" -> "ahmed@gmail.com").toString()
     val signature = JWT.signRsa(Algorithm.RS256, payload, MyKeyStore.privateKeyStr)
     assert(JWT.verifyRsa(Algorithm.RS256, MyKeyStore.publicKeyStr, payload, signature))
@@ -74,13 +74,13 @@ class RSASpec extends AnyFlatSpec with Matchers {
 
   it should "return throw an InvalidPrivateKey if you try encode with an invalid PrivateKey" in {
     val payload = Json.obj("name" -> "Ahmed", "email" -> "ahmed@gmail.com")
-    an [InvalidPrivateKey] should be thrownBy(JWT.encode("invalid", payload, Json.obj(), Some(Algorithm.RS256)))
+    an[InvalidPrivateKey] should be thrownBy (JWT.encode("invalid", payload, Json.obj(), Some(Algorithm.RS256)))
   }
 
   it should "return throw an InvalidPublicKey if you try encode with an invalid PublicKey" in {
     val payload = Json.obj("name" -> "Ahmed", "email" -> "ahmed@gmail.com")
     val jwt = JWT.encode(MyKeyStore.privateKeyStr, payload, Json.obj(), Some(Algorithm.RS256))
-    an [InvalidPublicKey] should be thrownBy(JWT.decode(jwt, Some("invalid")))
+    an[InvalidPublicKey] should be thrownBy (JWT.decode(jwt, Some("invalid")))
   }
 
   it should "decode a token encoded with no secret" in {

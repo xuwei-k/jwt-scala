@@ -7,11 +7,12 @@ import javax.crypto.Mac
 import play.api.libs.json._
 import javax.crypto.spec.SecretKeySpec
 import org.apache.commons.codec.binary.Base64
-
-import scala.util.{Try, Success, Failure}
-
+import scala.util.Try
+import scala.util.Success
+import scala.util.Failure
 
 object JWT {
+
   /**
    * generate Signature for token
    * @param algorithm that represent algorithm using on JWT
@@ -24,7 +25,7 @@ object JWT {
       case Algorithm.HS256 | Algorithm.HS384 | Algorithm.HS512 =>
         signHmac(algorithm, msg, key)
       case Algorithm.RS256 | Algorithm.RS384 | Algorithm.RS512 =>
-        //RSA is Asymetric thus it needs a PrivateKey
+        // RSA is Asymetric thus it needs a PrivateKey
         signRsa(algorithm, msg, key)
       case Algorithm.NONE => msg
     }
@@ -50,7 +51,7 @@ object JWT {
    * @param publicKey that is the publickey that use to verify token
    * @return Boolean
    */
-  private[jwt] def verifyRsa(algorithm: Algorithm, publicKey: String, msg: String, signature:String): Boolean = {
+  private[jwt] def verifyRsa(algorithm: Algorithm, publicKey: String, msg: String, signature: String): Boolean = {
     import java.security.Signature
     val rsa = Signature.getInstance(algorithm.toString)
     rsa.initVerify(PemUtil.decodePublicKey(publicKey))
@@ -65,7 +66,7 @@ object JWT {
    * @param privateKey that is the secret key that use to sign token
    * @return token signature
    */
-  private[jwt] def signRsa(algorithm: Algorithm,  msg: String, privateKey: String): String = {
+  private[jwt] def signRsa(algorithm: Algorithm, msg: String, privateKey: String): String = {
     import java.security.Signature
     val rsa = Signature.getInstance(algorithm.toString)
     rsa.initSign(PemUtil.decodePrivateKey(privateKey))
@@ -84,7 +85,6 @@ object JWT {
    */
   private[jwt] def decodeBase64url(str: String): String =
     new String(Base64.decodeBase64(str))
-
 
   /**
    * encode first part on jwt 'header'
@@ -124,7 +124,6 @@ object JWT {
       case None => ""
     }
 
-
   /**
    * encode jwt
    * @param secret that is the secret key that use to sign token
@@ -133,7 +132,12 @@ object JWT {
    * @param algorithm that represent algorithm using on JWT
    * @return String
    */
-  def encode(secret: String, payload: JsObject, header: JsObject = Json.obj(), algorithm: Option[Algorithm] = Some(Algorithm.HS256)): String = {
+  def encode(
+    secret: String,
+    payload: JsObject,
+    header: JsObject = Json.obj(),
+    algorithm: Option[Algorithm] = Some(Algorithm.HS256)
+  ): String = {
     val headerEncoded = encodeHeader(algorithm, header)
     val payloadEncoded = encodePayload(payload)
     val signature = encodedSignature(s"${headerEncoded}.${payloadEncoded}", secret, algorithm)
@@ -147,7 +151,11 @@ object JWT {
    * @param algorithm that represent algorithm using on JWT
    * @return String
    */
-  def encodeWithoutSecret(payload: JsObject, header: JsObject = Json.obj(), algorithm: Option[Algorithm] = Some(Algorithm.HS256)): String = {
+  def encodeWithoutSecret(
+    payload: JsObject,
+    header: JsObject = Json.obj(),
+    algorithm: Option[Algorithm] = Some(Algorithm.HS256)
+  ): String = {
     val headerEncoded = encodeHeader(algorithm, header)
     val payloadEncoded = encodePayload(payload)
     s"${headerEncoded}.${payloadEncoded}."
@@ -160,8 +168,8 @@ object JWT {
    */
   private[jwt] def partitionJwt(str: String, verify: Boolean): Try[List[String]] = {
     val parts = str.split('.').toList
-    if((verify && parts.size == 3) || (!verify && List(2, 3).contains(parts.size))) Success(parts)
-    else if(verify && parts.size < 3) Failure(new JWTException.NotEnoughSegments())
+    if ((verify && parts.size == 3) || (!verify && List(2, 3).contains(parts.size))) Success(parts)
+    else if (verify && parts.size < 3) Failure(new JWTException.NotEnoughSegments())
     else Failure(new JWTException.TooManySegments())
   }
 
@@ -191,7 +199,12 @@ object JWT {
    * @param signature that is extract from JWT
    * @return Boolean
    */
-  private[jwt] def verifySignature(algorithm: Algorithm, keyOpt: Option[String], signingInput: String, signature: String): Boolean = {
+  private[jwt] def verifySignature(
+    algorithm: Algorithm,
+    keyOpt: Option[String],
+    signingInput: String,
+    signature: String
+  ): Boolean = {
     (algorithm, keyOpt) match {
       case (Algorithm.NONE, None) =>
         // Even if the input JWT says it's `Algorithm.NONE` (means the JWT has no HMAC nor signature),
@@ -199,7 +212,7 @@ object JWT {
         // should expect that the JWT has any HMAC or signature.
         // So this function allow `Algorithm.NONE` only if the `keyOpt` is `None`.
         true
-      case (_ @ (Algorithm.HS256 | Algorithm.HS384 | Algorithm.HS512), Some(key)) =>
+      case (_ @(Algorithm.HS256 | Algorithm.HS384 | Algorithm.HS512), Some(key)) =>
         // Some attackers try such like:
         //   1. Get the public key to verify JWT
         //      * In general speaking, it's much easier than to get
@@ -213,9 +226,9 @@ object JWT {
         // As this `verifySignature` user input a public key as `keyOpt`,
         // this function reject all HMAC algorithms even though the input
         // JWT says its algorithm is HMAC.
-        if(PemUtil.isPublicKey(key)) return false
+        if (PemUtil.isPublicKey(key)) return false
         encodedSignature(signingInput, key, Some(algorithm)).equals(signature)
-      case (_ @ (Algorithm.RS256 | Algorithm.RS384 | Algorithm.RS512), Some(key)) =>
+      case (_ @(Algorithm.RS256 | Algorithm.RS384 | Algorithm.RS512), Some(key)) =>
         verifyRsa(algorithm, key, signingInput, signature)
       case _ =>
         false
@@ -244,7 +257,7 @@ object JWT {
    * @return JWTResult
    */
   def decode(jwt: String, key: Option[String]): JWTResult = {
-    if(jwt.trim.isEmpty) JWTResult.EmptyJWT
+    if (jwt.trim.isEmpty) JWTResult.EmptyJWT
     else {
       decodeParts(jwt, key.isDefined) match {
         case Success((headerJs, payload, signature, signingInput)) =>

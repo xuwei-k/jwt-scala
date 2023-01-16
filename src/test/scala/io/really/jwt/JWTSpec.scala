@@ -9,7 +9,6 @@ import org.apache.commons.codec.binary.Base64
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-
 class JWTSpec extends AnyFlatSpec with Matchers {
 
   it should "JTWHeader.toJson.toString" in {
@@ -20,7 +19,9 @@ class JWTSpec extends AnyFlatSpec with Matchers {
     val payload = Json.obj("name" -> "Ahmed", "email" -> "ahmed@gmail.com")
     val jwt = JWT.encode("secret", payload)
 
-    assert(jwt == "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiQWhtZWQiLCJlbWFpbCI6ImFobWVkQGdtYWlsLmNvbSJ9.77-9b--_ve-_vXAxYiUfZhwF77-977-9cO-_ve-_vQrEq--_ve-_vWHvv71wFBZ877-9WxXvv70")
+    assert(
+      jwt == "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiQWhtZWQiLCJlbWFpbCI6ImFobWVkQGdtYWlsLmNvbSJ9.77-9b--_ve-_vXAxYiUfZhwF77-977-9cO-_ve-_vQrEq--_ve-_vWHvv71wFBZ877-9WxXvv70"
+    )
     assertResult(JWT.decode(jwt, None).asInstanceOf[JWTResult.JWT].payload)(payload)
   }
 
@@ -88,10 +89,10 @@ class JWTSpec extends AnyFlatSpec with Matchers {
 
   it should "return Invalid Signature if you try decode singed JWT with crafted None algorithm header" in {
     val payload = Json.obj("name" -> "Test", "email" -> "test@example.com")
-    var jwt=JWT.encode("secret",payload)
+    var jwt = JWT.encode("secret", payload)
 
-    val none_header="{\"alg\":\"none\", \"typ\":\"JWT\"}"
-    jwt=jwt.replaceAll("^.*?\\.",Base64.encodeBase64URLSafeString(none_header.getBytes("utf-8"))+".");
+    val none_header = "{\"alg\":\"none\", \"typ\":\"JWT\"}"
+    jwt = jwt.replaceAll("^.*?\\.", Base64.encodeBase64URLSafeString(none_header.getBytes("utf-8")) + ".");
 
     assertResult(JWTResult.InvalidSignature)(JWT.decode(jwt, Some("secret")))
   }

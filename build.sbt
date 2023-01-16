@@ -8,7 +8,7 @@ organization := "com.github.xuwei-k"
 scalacOptions ++= Seq(
   "-feature",
   "-deprecation",
-  "-language:implicitConversions",
+  "-language:implicitConversions"
 )
 
 val Scala212 = "2.12.17"
@@ -29,8 +29,7 @@ Test / publishArtifact := false
 
 pomIncludeRepository := { _ => false }
 
-pomExtra := (
-  <developers>
+pomExtra := (<developers>
     <developer>
       <id>xuwei-k</id>
       <name>Kenji Yoshida</name>

@@ -20,7 +20,6 @@ object JWTException {
    */
   class NotEnoughSegments() extends JWTException("Not enough segment")
 
-
   /**
    * Represent Exception that throw when you try to use an invalid public key
    */
@@ -30,6 +29,5 @@ object JWTException {
    * Represent Exception that throw when you try to use an invalid private key
    */
   class InvalidPrivateKey() extends JWTException("Not a valid private key ")
-
 
 }

@@ -5,8 +5,8 @@ package io.really.jwt
 
 import play.api.libs.json._
 
-sealed trait Algorithm{
-  def name:String
+sealed trait Algorithm {
+  def name: String
 }
 
 /**
@@ -83,7 +83,7 @@ object Algorithm {
   implicit val format: Format[Algorithm] = new Format[Algorithm] {
 
     def reads(v: JsValue): JsResult[Algorithm] = v match {
-      //HSxxx algorithms
+      // HSxxx algorithms
       case JsString("HmacSHA256") => JsSuccess(HS256)
       case JsString("HmacSHA384") => JsSuccess(HS384)
       case JsString("HmacSHA512") => JsSuccess(HS512)
@@ -92,7 +92,7 @@ object Algorithm {
       case JsString("HS384") => JsSuccess(HS384)
       case JsString("HS512") => JsSuccess(HS512)
 
-      //RSxxx algorithms
+      // RSxxx algorithms
       case JsString("SHA256withRSA") => JsSuccess(RS256)
       case JsString("SHA384withRSA") => JsSuccess(RS384)
       case JsString("SHA512withRSA") => JsSuccess(RS512)

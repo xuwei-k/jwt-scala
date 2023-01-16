@@ -1,10 +1,14 @@
 package io.really.jwt
 
 import java.security.spec.PKCS8EncodedKeySpec
-import java.security.{PrivateKey, PublicKey}
-import io.really.jwt.JWTException.{InvalidPublicKey, InvalidPrivateKey}
+import java.security.PrivateKey
+import java.security.PublicKey
+import io.really.jwt.JWTException.InvalidPublicKey
+import io.really.jwt.JWTException.InvalidPrivateKey
 import org.apache.commons.codec.binary.Base64
-import scala.util.{Try, Success, Failure}
+import scala.util.Try
+import scala.util.Success
+import scala.util.Failure
 
 object PemUtil {
 
@@ -35,7 +39,8 @@ object PemUtil {
   }
 
   def removeBeginEnd(pem: String) = {
-    pem.replaceAll("-----BEGIN (.*)-----", "")
+    pem
+      .replaceAll("-----BEGIN (.*)-----", "")
       .replaceAll("-----END (.*)----", "")
       .replaceAll("\r\n", "")
       .replaceAll("\n", "")
@@ -47,7 +52,6 @@ object PemUtil {
     Base64.decodeBase64(removedpem)
   }
 }
-
 
 object DerUtil {
 
