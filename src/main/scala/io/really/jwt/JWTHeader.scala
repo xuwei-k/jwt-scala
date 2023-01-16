@@ -8,7 +8,7 @@ import play.api.libs.json._
  * @param extraHeader is represent
  */
 case class JWTHeader(alg: Algorithm, extraHeader: JsObject = Json.obj()) {
-  val `type` = "JWT"
+  def `type`: String = "JWT"
 
   def toJson: JsObject = JsObject(
     Seq(
