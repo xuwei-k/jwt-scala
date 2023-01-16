@@ -4,7 +4,6 @@
 package io.really.jwt
 
 import javax.crypto.Mac
-import io.really.jwt.JWTException.InvalidAlgorithm
 import play.api.libs.json._
 import javax.crypto.spec.SecretKeySpec
 import org.apache.commons.codec.binary.Base64
