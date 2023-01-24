@@ -42,7 +42,7 @@ libraryDependencies += {
   if (scalaBinaryVersion.value == "3") {
     "com.typesafe.play" %% "play-json" % "2.10.0-RC7"
   } else {
-    "com.typesafe.play" %% "play-json" % "2.9.3"
+    "com.typesafe.play" %% "play-json" % "2.9.4"
   }
 }
 
