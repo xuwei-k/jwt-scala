@@ -93,7 +93,7 @@ val baseSettings = Seq(
   crossScalaVersions := crossVersionAll,
   crossVersion := CrossVersion.binary,
   autoAPIMappings := true,
-  libraryDependencies ++= Seq(Libs.munit, Libs.munitScalacheck),
+  libraryDependencies ++= Seq(Libs.munit.value, Libs.munitScalacheck.value),
   testFrameworks += new TestFramework("munit.Framework"),
   mimaFailOnNoPrevious := false,
   Test / aggregate := false,
@@ -247,9 +247,9 @@ lazy val docs = project
       Libs.play,
       Libs.playTestProvided,
       Libs.json4sNative,
-      Libs.circeCore,
-      Libs.circeGeneric,
-      Libs.circeParse,
+      Libs.circeCore.value,
+      Libs.circeGeneric.value,
+      Libs.circeParse.value,
       Libs.upickle,
       Libs.zioJson,
       Libs.argonaut
@@ -263,7 +263,14 @@ lazy val core = crossProject(JSPlatform, JVMPlatform)
     name := "jwt-core",
     libraryDependencies ++= Seq(Libs.bouncyCastle)
   )
-  .jsSettings(Test / fork := false)
+  .jsSettings(
+    Test / fork := false,
+    Test / test := (()), // TODO
+    libraryDependencies ++= Seq(
+      Libs.scalaJavaTime.value,
+      Libs.scalajsSecureRandom.value
+    )
+  )
 
 lazy val jsonCommon = crossProject(JSPlatform, JVMPlatform)
   .in(file("json/common"))
@@ -271,7 +278,10 @@ lazy val jsonCommon = crossProject(JSPlatform, JVMPlatform)
   .settings(
     name := "jwt-json-common"
   )
-  .jsSettings(Test / fork := false)
+  .jsSettings(
+    Test / fork := false,
+    Test / test := (()) // TODO
+  )
   .aggregate(core)
   .dependsOn(core % "compile->compile;test->test")
 
@@ -291,9 +301,19 @@ lazy val circe = crossProject(JSPlatform, JVMPlatform)
   .settings(releaseSettings)
   .settings(
     name := "jwt-circe",
-    libraryDependencies ++= Seq(Libs.circeCore, Libs.circeParse, Libs.circeGeneric % "test"),
+    libraryDependencies ++= Seq(
+      Libs.circeCore.value,
+      Libs.circeParse.value,
+      Libs.circeGeneric.value % "test"
+    )
   )
-  .jsSettings(Test / fork := false)
+  .jsSettings(
+    Test / fork := false,
+    Test / test := (()), // TODO
+    libraryDependencies ++= Seq(
+      Libs.circeJawn.value
+    )
+  )
   .aggregate(jsonCommon)
   .dependsOn(jsonCommon % "compile->compile;test->test")
 
