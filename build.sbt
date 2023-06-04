@@ -15,7 +15,7 @@ val Scala212 = "2.12.18"
 
 scalaVersion := Scala212
 
-crossScalaVersions := Seq(Scala212, "2.13.11", "3.3.0-RC6")
+crossScalaVersions := Seq(Scala212, "2.13.11", "3.3.0")
 
 homepage := Some(url("https://github.com/xuwei-k/jwt-scala"))
 
@@ -40,7 +40,7 @@ publishTo := sonatypePublishToBundle.value
 
 libraryDependencies += {
   if (scalaBinaryVersion.value == "3") {
-    "com.typesafe.play" %% "play-json" % "2.10.0-RC8"
+    "com.typesafe.play" %% "play-json" % "2.10.0-RC9"
   } else {
     "com.typesafe.play" %% "play-json" % "2.9.4"
   }
