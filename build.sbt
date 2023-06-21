@@ -48,7 +48,7 @@ libraryDependencies += {
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.16" % "test",
-  "commons-codec" % "commons-codec" % "1.15",
+  "commons-codec" % "commons-codec" % "1.16.0",
   "org.bouncycastle" % "bcprov-jdk16" % "1.46"
 )
 
