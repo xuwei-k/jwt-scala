@@ -38,7 +38,7 @@ pomExtra := (<developers>
 
 publishTo := sonatypePublishToBundle.value
 
-libraryDependencies += "com.typesafe.play" %% "play-json" % "2.10.2"
+libraryDependencies += "org.playframework" %% "play-json" % "3.0.0"
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.17" % "test",
