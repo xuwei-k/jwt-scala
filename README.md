@@ -9,7 +9,7 @@ Jwt-scala has been published for scala 2.12, 2.13 and 3
 Add the dependency to your build.sbt
 
 ```scala
-libraryDependencies += "com.github.xuwei-k" %% "jwt-scala" % "1.8.1"
+libraryDependencies += "com.github.xuwei-k" %% "jwt-scala" % "<version>"
 ```
 
 ### Usage
