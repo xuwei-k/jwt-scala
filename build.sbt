@@ -42,7 +42,7 @@ libraryDependencies += "org.playframework" %% "play-json" % "3.0.2"
 
 libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "3.2.18" % "test",
-  "commons-codec" % "commons-codec" % "1.16.1",
+  "commons-codec" % "commons-codec" % "1.17.0",
   "org.bouncycastle" % "bcprov-jdk16" % "1.46"
 )
 
